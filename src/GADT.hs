@@ -17,9 +17,9 @@ import Prelude
   keys that point to a String, an Int or a Bool.
  -}
 data Key a where
-	KeyS :: Key String
-	KeyI :: Key Int
-	KeyB :: Key Bool
+	KeyS :: String -> Key String
+	KeyI :: String -> Key Int
+	KeyB :: String -> Key Bool
 
 
 
@@ -37,26 +37,26 @@ data Entry =
 type Bag =
   [Entry]
 
-flag :: Key Bool
+flag :: String -> Key Bool
 flag =
   KeyB
 
-counter :: Key Int
+counter :: String -> Key Int
 counter =
   KeyI
 
-name :: Key String
+name :: String -> Key String
 name =
   KeyS
 
 stuff :: Bag
 stuff =
-  [Entry flag True, Entry counter 10, Entry name "name"]
+  [Entry (flag "f")  True, Entry (counter "C") 10, Entry (name "n") "name"]
 
 get :: Key a -> Bag -> Maybe a
 get _ [] = Nothing
 get k1 (Entry k2 v : rest) = case (k1, k2) of
-	(KeyB, KeyB) -> Just v
-	(KeyI, KeyI) -> Just v
-	(KeyS, KeyS) -> Just v
+	(KeyB n1, KeyB n2) -> if n1 == n2 then Just v else get k1 rest
+	(KeyI n1, KeyI n2) -> if n1 == n2 then Just v else get k1 rest
+	(KeyS n1, KeyS n2) -> if n1 == n2 then Just v else get k1 rest
 	_            -> get k1 rest

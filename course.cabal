@@ -52,7 +52,7 @@ library
 
   hs-source-dirs:     src
 
-  exposed-modules:    Course
+  exposed-modules:  Course
                       Course.Anagrams
                       Course.Applicative
                       Course.Apply
@@ -80,6 +80,8 @@ library
                       Course.StateT
                       Course.Traversable
                       Course.Validation
+                      TicTacToe
+                      GADT
 
 test-suite            doctests
   type:
